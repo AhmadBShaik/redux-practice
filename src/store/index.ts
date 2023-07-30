@@ -1,5 +1,4 @@
-import { createStore } from "redux";
-
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 interface State {
   count: number;
 }
@@ -7,26 +6,25 @@ interface State {
 const initialState = {
   count: 0,
 };
-const reducer = (
-  state: State = initialState,
-  action:
-    | { type: "INCREMENT"; payload?: { value: number } }
-    | { type: "DECREMENT"; payload?: { value: number } }
-    | { type: "RESET" }
-) => {
-  // Only synchronous
-  // Should not mutate original state
 
-  if (action.type === "INCREMENT") {
-    return { ...state, count: state.count + (action.payload?.value ?? 1) };
-  }
-  if (action.type === "DECREMENT") {
-    return { ...state, count: state.count - (action.payload?.value ?? 1) };
-  }
-  if (action.type === "RESET") {
-    return { ...state, count: 0 };
-  }
+const counterSlice = createSlice({
+  name: "counter",
+  initialState,
+  reducers: {
+    increment(state: State, action: { payload?: { value: number } }) {
+      !!action.payload ? (state.count += action.payload.value) : state.count++;
+    },
+    decrement(state: State, action: { payload?: { value: number } }) {
+      !!action.payload ? (state.count -= action.payload.value) : state.count--;
+    },
+    reset() {
+      return initialState;
+    },
+  },
+});
 
-  return state;
-};
-export const store = createStore(reducer);
+export const actions = counterSlice.actions;
+
+export const store = configureStore({
+  reducer: counterSlice.reducer,
+});

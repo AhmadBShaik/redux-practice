@@ -1,23 +1,24 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "./store";
 
 function App() {
   const count = useSelector((state: any) => state.count);
   const countDispatch = useDispatch();
 
   const reset = () => {
-    countDispatch({ type: "RESET" });
+    countDispatch(actions.reset());
   };
   const increment = () => {
-    countDispatch({ type: "INCREMENT" });
+    countDispatch(actions.increment());
   };
   const decrement = () => {
-    countDispatch({ type: "DECREMENT" });
+    countDispatch(actions.decrement());
   };
   const incrementByThree = () => {
-    countDispatch({ type: "INCREMENT", payload: { value: 3 } });
+    countDispatch(actions.increment({ value: 3 }));
   };
   const decrementByThree = () => {
-    countDispatch({ type: "DECREMENT", payload: { value: 3 } });
+    countDispatch(actions.decrement({ value: 3 }));
   };
   return (
     <div className="p-5 flex flex-col items-center">
