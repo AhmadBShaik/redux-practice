@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit";
 interface State {
   count: number;
 }
@@ -11,10 +11,16 @@ const counterSlice = createSlice({
   name: "counter",
   initialState,
   reducers: {
-    increment(state: State, action: { payload?: { value: number } }) {
+    increment(
+      state: State,
+      action: PayloadAction<{ value: number } | undefined>
+    ) {
       !!action.payload ? (state.count += action.payload.value) : state.count++;
     },
-    decrement(state: State, action: { payload?: { value: number } }) {
+    decrement(
+      state: State,
+      action: PayloadAction<{ value: number } | undefined>
+    ) {
       !!action.payload ? (state.count -= action.payload.value) : state.count--;
     },
     reset() {
